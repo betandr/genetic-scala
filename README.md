@@ -8,7 +8,7 @@ Basic genetic algorithm implementation in Scala
 2. **Evaluation:** fitness is calculated for each individual in the population
 3. **Selection:** keep the individuals with the best fit and discard the rest
 4. **Crossover:** combine aspects of the selected individuals to make fitter offspring
-5. **Mutation:** add randomness to genetics of the population by making small changes to an individuals genome
+5. **Mutation:** add randomness to genetics of the population by making small changes to an individual's genome
 6. **Repeat:** create successive generations taking the best genetic material from ancestors
 7. **Termination:** when an acceptable solution is found (or our computation takes too long)
 
