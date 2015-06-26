@@ -1,5 +1,5 @@
 package genetic
 
-object Runner {
-
+object Runner extends App {
+    println("Hello, World!")
 }
