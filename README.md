@@ -1,4 +1,6 @@
-# Basic genetic algorithm implementation in Scala
+# genetic-scala
+
+Basic genetic algorithm implementation in Scala
 
 ##Process:
 
