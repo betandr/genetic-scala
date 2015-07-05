@@ -14,6 +14,7 @@ object Runner extends App {
 
   // TODO refactor this as it's imperative
   var generation = 0
+  //    todo refactor this to use 1 / (size/current) to get fitness score
   while({evaluator.fitness(population.fittest(evaluator)) < evaluator.maximumFitness}) {
     generation += 1
     val fittest = population.fittest(evaluator)

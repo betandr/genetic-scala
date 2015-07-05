@@ -2,24 +2,24 @@ package genetic
 
 import util.Random
 
-class Population(val initialSize: Integer) {
+class Population(val populationSize: Integer) {
   val numChromosome: Integer = 8
   var pop: Array[Organism] = _
 
   val mutationRate = 0.015
-  val uniformRate = 0.5
+  val mixingRatio = 0.5
 
   def initialise = {
-    pop = new Array[Organism](initialSize + 1)
+    pop = new Array[Organism](populationSize + 1)
   }
 
   /**
   * Populate with organisms
   */
   def populate = {
-    pop = new Array[Organism](initialSize + 1)
+    pop = new Array[Organism](populationSize + 1)
 
-    for( i <- 0 to initialSize ) {
+    for( i <- 0 to populationSize ) {
       val bytes = new Array[Byte](numChromosome)
       Random.nextBytes(bytes)
 
@@ -35,7 +35,7 @@ class Population(val initialSize: Integer) {
   def fittest(evaluator: Evaluator): Organism = {
     var o: Organism = pop(0)
 
-    for (i <- 1 to initialSize) {
+    for (i <- 1 to populationSize) {
       if (evaluator.fitness(pop(i)) > evaluator.fitness(o)) {
         o = pop(i)
       }
@@ -89,16 +89,12 @@ class Population(val initialSize: Integer) {
 
   def crossover(parent1: Organism, parent2: Organism): Organism = {
     val otherParentGenes = parent2.genes
-
     val chromosomes = new Array[Byte](otherParentGenes.length)
-
-    println("parent1: " + parent1)
-    println("parent2: " + parent2)
 
     var index: Integer = 0
     for (gene <- parent1.genes) {
 
-      if (Math.random <= uniformRate) {
+      if (Math.random <= mixingRatio) {
         chromosomes(index) = gene
       } else {
         chromosomes(index) = otherParentGenes(index)
@@ -107,8 +103,6 @@ class Population(val initialSize: Integer) {
     }
 
     val child = new Organism(chromosomes)
-
-    println("child:   " + child)
 
     child
   }
@@ -120,6 +114,6 @@ class Population(val initialSize: Integer) {
    */
   def rouletteSelection(evaluator: Evaluator): Organism = {
     // todo algorithm
-    fittest(evaluator)
+    pop(Random.nextInt(populationSize))
   }
 }
