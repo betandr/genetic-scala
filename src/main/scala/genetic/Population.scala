@@ -90,7 +90,10 @@ class Population(val initialSize: Integer) {
   def crossover(parent1: Organism, parent2: Organism): Organism = {
     val otherParentGenes = parent2.genes
 
-    var chromosomes = new Array[Byte](otherParentGenes.length)
+    val chromosomes = new Array[Byte](otherParentGenes.length)
+
+    println("parent1: " + parent1)
+    println("parent2: " + parent2)
 
     var index: Integer = 0
     for (gene <- parent1.genes) {
@@ -103,7 +106,11 @@ class Population(val initialSize: Integer) {
       index += 1
     }
 
-    new Organism(chromosomes)
+    val child = new Organism(chromosomes)
+
+    println("child:   " + child)
+
+    child
   }
 
   /**
