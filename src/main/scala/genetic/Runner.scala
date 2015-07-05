@@ -5,20 +5,28 @@ object Runner extends App {
   val solution: Array[Byte] = candidate.getBytes
 
   val evaluator = new Evaluator(solution)
-  val evolution = new Evolution
 
   // TODO make this functional
   var population = new Population(50)
   population.populate
 
+  object WorldFullException extends Exception { }
+
   // TODO refactor this as it's imperative
   var generation = 0
-  while({population.fittest.fitness < evaluator.maximumFitness}) {
+  while({evaluator.fitness(population.fittest(evaluator)) < evaluator.maximumFitness}) {
     generation += 1
-    println("Gen: " + generation + " Fit: " + population.fittest)
-    population = evolution.evolve(population)
+    val fittest = population.fittest(evaluator)
+    println(
+      "Generation: " + generation +
+      " Chromosome: " + fittest +
+      " Fitness: " + evaluator.fitness(fittest)
+    )
+    population = population.evolve(evaluator)
+
+    if (generation > 100) throw WorldFullException
   }
 
   println("Candidate:" + candidate)
-  println("Solution: " + population.fittest)
+  println("Solution: " + population.fittest(evaluator))
 }

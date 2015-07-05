@@ -1,17 +1,26 @@
 package genetic
 
-class Organism {
-  var genes: Array[Byte] = _
+class Organism(val chromosome: Array[Byte]) {
 
-  def fitness = {
-    1
-  }
-
-  def gene: Byte = {
-    return 1
-  }
+  def genes = chromosome
 
   override def toString: String = {
-    "0101010101010101010101010101010101010101010101010101010101010101"
+
+    val sb: StringBuilder = new StringBuilder
+
+    for (gene <- chromosome) {
+      val s: String = String.format("%8s", Integer.toBinaryString(gene & 0xFF)).replace(' ', '0');
+      sb.append(s)
+    }
+
+    sb.toString
+  }
+
+  def replaceGene(index: Integer, gene: Byte) = {
+    genes(index) = gene
+  }
+
+  override def clone: Organism = {
+    new Organism(chromosome)
   }
 }
