@@ -23,7 +23,7 @@ object Runner extends App {
       // perform 'elitist' evolution
       population = population.evolve(false, evaluator)
 
-//      if (generation > 98) throw new Exception("The world is full")
+      if (generation > 98) throw new Exception("The world is full")
     }
   } catch {
     case e: Exception => println(e.getMessage)
