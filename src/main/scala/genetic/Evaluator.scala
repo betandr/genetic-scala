@@ -5,7 +5,7 @@ class Evaluator(solution: Array[Byte]) {
   /**
   * Calculate an organism's fitness by comparing it to the optimal solution
   */
-  def fitness(organism: Organism): Integer = {
+  def fitness(organism: Organism): Double = {
     var score: Integer = 0
     var index: Integer = 0
 
@@ -15,13 +15,8 @@ class Evaluator(solution: Array[Byte]) {
       }
       index += 1
     }
-    score
-  }
 
-  /**
-  * The maximum possible fitness from the solution
-  */
-  def maximumFitness: Integer = {
-    solution.size
+    val maxScore = organism.genes.size
+    1.0 / (maxScore.toDouble - score.toDouble)
   }
 }
