@@ -21,7 +21,7 @@ object Runner extends App {
       println(f"g: $generation%02d c: $fittest%s f: $fitness%2.2f")
 
       // perform 'elitist' evolution
-      population = population.evolve(false, evaluator)
+      population = population.evolve(true, evaluator)
 
       if (generation > 98) throw new Exception("The world is full")
     }
