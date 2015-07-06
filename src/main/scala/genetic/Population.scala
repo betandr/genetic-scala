@@ -6,7 +6,7 @@ class Population(val populationSize: Integer) {
   val numChromosome: Integer = 8
   var pop: Array[Organism] = _
 
-  val mutationRate = 0.01
+  val mutationRate = 0.015
   val mixingRatio = 0.5
 
   def initialise = {
@@ -71,7 +71,7 @@ class Population(val populationSize: Integer) {
 
     if (elitist) {
       val eliteOrganism = fittest(evaluator)
-      nextGeneration.addOrganism(0, eliteOrganism)
+      nextGeneration.addOrganism(0, mutate(eliteOrganism))
       offset += 1
     }
 
@@ -101,24 +101,16 @@ class Population(val populationSize: Integer) {
     new Organism(c)
   }
 
+  /**
+   * Use one-point crossover to create a child organism
+   */
   def crossover(parent1: Organism, parent2: Organism): Organism = {
-    val otherParentGenes = parent2.genes
-    val chromosomes = new Array[Byte](otherParentGenes.length)
+    val cutPoint = Random.nextInt(parent1.genes.length)
 
-    var index: Integer = 0
-    for (gene <- parent1.genes) {
-
-      if (Math.random <= mixingRatio) {
-        chromosomes(index) = gene
-      } else {
-        chromosomes(index) = otherParentGenes(index)
-      }
-      index += 1
-    }
-
-    val child = new Organism(chromosomes)
-
-    child
+    new Organism(
+      parent1.genes.slice(0, cutPoint) ++
+      parent2.genes.slice(cutPoint, parent1.genes.length)
+    )
   }
 
   /**

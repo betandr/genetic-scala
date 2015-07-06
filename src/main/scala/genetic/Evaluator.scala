@@ -18,6 +18,6 @@ class Evaluator(solution: Array[Byte]) {
 
     val maxScore = organism.genes.size
 
-    1.0 / (maxScore.toDouble - score.toDouble)
+    1.0 - ((maxScore.toDouble - score.toDouble) / 10.0)
   }
 }
