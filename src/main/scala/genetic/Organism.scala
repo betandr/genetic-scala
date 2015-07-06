@@ -16,10 +16,6 @@ class Organism(val chromosome: Array[Byte]) {
     sb.toString
   }
 
-  def replaceGene(index: Integer, gene: Byte) = {
-    genes(index) = gene
-  }
-
   override def clone: Organism = {
     new Organism(chromosome)
   }

@@ -6,7 +6,7 @@ class Population(val populationSize: Integer) {
   val numChromosome: Integer = 8
   var pop: Array[Organism] = _
 
-  val mutationRate = 0.015
+  val mutationRate = 0.01
   val mixingRatio = 0.5
 
   def initialise = {
@@ -59,9 +59,9 @@ class Population(val populationSize: Integer) {
     // at least as good as the previous generation
     nextGeneration.addOrganism(0, fittest(evaluator))
 
-    for( index <- 1 to pop.size){
-      val parent1: Organism = rouletteSelection(evaluator)
-      val parent2: Organism = rouletteSelection(evaluator)
+    for(index <- 1 to pop.size) {
+      val parent1: Organism = tournamentSelection(evaluator)
+      val parent2: Organism = tournamentSelection(evaluator)
       val child: Organism = crossover(parent1, parent2)
 
       nextGeneration.addOrganism(index, mutate(child))
@@ -71,20 +71,18 @@ class Population(val populationSize: Integer) {
   }
 
   def mutate(organism: Organism): Organism = {
-    val mutatedOrganism = organism.clone
+    val c: Array[Byte] = organism.genes
 
-    var index: Integer = 0
-    for (gene <- mutatedOrganism.genes) {
+    for(index <- 1 to c.length - 1) {
+
       if (Math.random <= mutationRate) {
         val newGenes = new Array[Byte](1)
         Random.nextBytes(newGenes)
-        mutatedOrganism.replaceGene(index, newGenes(0))
+        c(index) = newGenes(0)
       }
-
-      index += 1
     }
 
-    mutatedOrganism
+    new Organism(c)
   }
 
   def crossover(parent1: Organism, parent2: Organism): Organism = {
@@ -108,12 +106,20 @@ class Population(val populationSize: Integer) {
   }
 
   /**
-   * Select an organism from the population based on 'roulette wheel' selection.
+   * Select an organism from the population based on 'tournament' selection.
    * @param evaluator
    * @return
    */
-  def rouletteSelection(evaluator: Evaluator): Organism = {
-    // todo algorithm
-    pop(Random.nextInt(populationSize))
+  def tournamentSelection(evaluator: Evaluator): Organism = {
+    val numberOfRounds = 5
+
+    val tournament = new Population(numberOfRounds)
+    tournament.initialise
+    for (i <- 0 to numberOfRounds) {
+      val randomOrganism = pop(Random.nextInt(populationSize))
+      tournament.addOrganism(i, randomOrganism)
+    }
+
+    tournament.fittest(evaluator)
   }
 }
