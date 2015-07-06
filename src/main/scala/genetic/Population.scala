@@ -32,6 +32,18 @@ class Population(val populationSize: Integer) {
     pop.length
   }
 
+  override def toString: String = {
+    val sb: StringBuilder = new StringBuilder
+
+    sb.append("[")
+    for (organism <- pop) {
+      sb.append(organism + ", ")
+    }
+    sb.append("]")
+
+    sb.toString
+  }
+
   def fittest(evaluator: Evaluator): Organism = {
     var o: Organism = pop(0)
 
@@ -51,15 +63,19 @@ class Population(val populationSize: Integer) {
     pop(index) = organism
   }
 
-  def evolve(evaluator: Evaluator): Population = {
+  def evolve(elitist: Boolean, evaluator: Evaluator): Population = {
     val nextGeneration = new Population(pop.size)
     nextGeneration.initialise
 
-    // add fittest individual to next generation to ensure next gen is
-    // at least as good as the previous generation
-    nextGeneration.addOrganism(0, fittest(evaluator))
+    var offset = 0
 
-    for(index <- 1 to pop.size) {
+    if (elitist) {
+      val eliteOrganism = fittest(evaluator)
+      nextGeneration.addOrganism(0, eliteOrganism)
+      offset += 1
+    }
+
+    for(index <- offset to pop.size) {
       val parent1: Organism = tournamentSelection(evaluator)
       val parent2: Organism = tournamentSelection(evaluator)
       val child: Organism = crossover(parent1, parent2)
@@ -115,6 +131,7 @@ class Population(val populationSize: Integer) {
 
     val tournament = new Population(numberOfRounds)
     tournament.initialise
+
     for (i <- 0 to numberOfRounds) {
       val randomOrganism = pop(Random.nextInt(populationSize))
       tournament.addOrganism(i, randomOrganism)
