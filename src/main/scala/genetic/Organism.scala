@@ -14,8 +14,4 @@ class Organism(val chromosome: Array[Byte]) {
 
     sb.toString
   }
-
-  override def clone: Organism = {
-    new Organism(chromosome)
-  }
 }

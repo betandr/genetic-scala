@@ -9,13 +9,16 @@ class Population(val populationSize: Integer) {
   val mutationRate = 0.015
   val mixingRatio = 0.5
 
+  /**
+   * Create the space for the population but don't populate
+   */
   def initialise = {
     pop = new Array[Organism](populationSize + 1)
   }
 
   /**
-  * Populate with organisms
-  */
+   * Populate with organisms
+   */
   def populate = {
     pop = new Array[Organism](populationSize + 1)
 
@@ -32,6 +35,9 @@ class Population(val populationSize: Integer) {
     }
   }
 
+  /**
+   * Return the population size
+   */
   def size: Integer = {
     pop.length
   }
@@ -43,30 +49,24 @@ class Population(val populationSize: Integer) {
     for (organism <- pop) {
       sb.append(organism + ", ")
     }
+    sb.dropRight(2)
     sb.append("]")
 
     sb.toString
   }
 
-  def fittest(evaluator: Evaluator): Organism = {
-    var o: Organism = pop(0)
-
-    for (i <- 0 to populationSize - 1) {
-      if (evaluator.fitness(pop(i)) > evaluator.fitness(o)) {
-        o = pop(i)
-      }
-    }
-
-    o
-  }
-
   /**
-   * todo refactor this to return a new population rather than mutate
+   * Add an organism to a particular location in a population
    */
   def addOrganism(index: Integer, organism: Organism) = {
     pop(index) = organism
   }
 
+  /**
+   * Evolve the population by crossover and mutation
+   * @param elitist If true, the fittest organism passes to the next generation
+   * @param evaluator The evaluator to use
+   */
   def evolve(elitist: Boolean, evaluator: Evaluator): Population = {
     val nextGeneration = new Population(pop.size)
     nextGeneration.initialise
@@ -74,7 +74,7 @@ class Population(val populationSize: Integer) {
     var offset = 0
 
     if (elitist) {
-      val eliteOrganism = fittest(evaluator)
+      val eliteOrganism = evaluator.fittest(this)
       nextGeneration.addOrganism(0, mutate(eliteOrganism))
       offset += 1
     }
@@ -90,6 +90,9 @@ class Population(val populationSize: Integer) {
     nextGeneration
   }
 
+  /**
+   * Mutate an organism with a random rate of 0.015
+   */
   def mutate(organism: Organism): Organism = {
     val c: Array[Byte] = organism.genes
 
@@ -105,6 +108,9 @@ class Population(val populationSize: Integer) {
     new Organism(c)
   }
 
+  /**
+   * Create a child organism from two parents
+   */
   def crossover(parent1: Organism, parent2: Organism): Organism = {
     val otherParentGenes = parent2.genes
     val chromosomes = new Array[Byte](otherParentGenes.length)
@@ -125,11 +131,9 @@ class Population(val populationSize: Integer) {
 
   /**
    * Select an organism from the population based on 'tournament' selection.
-   * @param evaluator
-   * @return
    */
   def tournamentSelection(evaluator: Evaluator): Organism = {
-    val numberOfRounds = 5
+    val numberOfRounds = 10
 
     val tournament = new Population(numberOfRounds)
     tournament.initialise
@@ -139,6 +143,6 @@ class Population(val populationSize: Integer) {
       tournament.addOrganism(i, randomOrganism)
     }
 
-    tournament.fittest(evaluator)
+    evaluator.fittest(tournament)
   }
 }
