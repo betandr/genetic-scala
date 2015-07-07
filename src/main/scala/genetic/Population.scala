@@ -96,12 +96,10 @@ class Population(val populationSize: Integer) {
   def mutate(organism: Organism): Organism = {
     val c: Array[Byte] = organism.genes
 
-    for(index <- 1 to c.length - 1) {
+    for(index <- 0 to c.length - 1) {
 
       if (Math.random <= mutationRate) {
-        val newGenes = new Array[Byte](1)
-        Random.nextBytes(newGenes)
-        c(index) = newGenes(0)
+        c(index) = Math.round(Math.random).toByte
       }
     }
 

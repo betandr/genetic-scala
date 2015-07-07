@@ -11,20 +11,21 @@ object Runner extends App {
   try {
     var generation = 1
     var fittest = evaluator.fittest(population)
+    var fitness = evaluator.fitness(fittest)
 
     while (evaluator.fitness(fittest) < 1.0) {
-      val fitness = evaluator.fitness(fittest)
+      fitness = evaluator.fitness(fittest)
+      println(f"generation: $generation%02d chromosome: $fittest%s fitness: $fitness%2.2f")
+
       population = population.evolve(true, evaluator)
       generation += 1
 
       fittest = evaluator.fittest(population)
-
-      println(f"g: $generation%03d ch: $fittest%s f: $fitness%2.2f")
-//      if (generation > 98) throw new Exception("The world is full")
     }
 
-    println("\ncandidate: " + candidate)
-    println("solution:  " + evaluator.fittest(population))
+    println(f"generation: $generation%02d chromosome: $fittest%s fitness: $fitness%2.2f")
+    println("\ncandidate:" + candidate)
+    println("solution: " + evaluator.fittest(population))
 
   } catch {
     case e: Exception => println(e.getMessage)
