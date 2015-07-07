@@ -24,8 +24,8 @@ object Runner extends App {
     }
 
     println(f"generation: $generation%02d chromosome: $fittest%s fitness: $fitness%2.2f")
-    println("\ncandidate:" + candidate)
-    println("solution: " + evaluator.fittest(population))
+    println("\ncandidate:  " + candidate)
+    println("solution:   " + evaluator.fittest(population))
 
   } catch {
     case e: Exception => println(e.getMessage)
