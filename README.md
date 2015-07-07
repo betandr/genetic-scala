@@ -14,9 +14,7 @@ sbt run
 
 Creates a random population of 50 organisms each with a 64-bit chromosome, such as:
 
-```
-010110101001010111010100010100101111001001101010101110011101011
-```
+|0|0|1|1|0|0|1|0|1|0|1|1|1|0|1|0|1|0|1|0|1|1|0|1|0|0|1|0|1|0|1|1|0|1|0|1|0|1|0|1|1|0|1|0|1|0|1|0|1|1|0|1|0|1|1|0|1|0|0|1|0|1|0|
 
 ###2. Evaluation
  
@@ -49,6 +47,10 @@ generation.
 To create a new organism, two parents are selected using tournament selection then a child is created using 
 [uniform crossover](https://en.wikipedia.org/wiki/Crossover_(genetic_algorithm)#Uniform_Crossover_and_Half_Uniform_Crossover)
 which uses a mixing ratio of 0.5, thereby taking an roughly equal number of genes from each organism. 
+
+|**0**|**0**|**1**|**1**|0|0|1|0|1|0|1|**1**|**1**|0|**1**|0|1|0|**1**|**0**|**1**|**1**|**0**|**1**|**0**|0|1|0|1|**0**|1|1|0|**1**|**0**|1|0|1|**0**|**1**|**1**|0|1|0|**1**|**0**|1|0|1|1|0|**1**|0|1|**1**|0|1|0|0|**1**|**0**|**1**|0|
+|1|1|1|0|0|0|1|0|1|1|0|1|0|1|1|0|1|0|0|1|0|1|1|0|1|0|1|0|1|0|1|0|1|1|1|0|1|0|1|0|0|1|1|1|0|0|0|1|1|0|1|0|1|0|1|1|1|0|0|1|0|1|0|
+
 
 ###5. Mutation
 
