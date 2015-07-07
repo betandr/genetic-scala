@@ -50,6 +50,14 @@ To create a new organism, two parents are selected using tournament selection th
 [uniform crossover](https://en.wikipedia.org/wiki/Crossover_(genetic_algorithm)#Uniform_Crossover_and_Half_Uniform_Crossover)
 which uses a mixing ratio of 0.5, thereby taking an roughly equal number of genes from each organism. 
 
+In the below partial chromosome, z is created using alternate genes from parents x and y.
+
+```
+x = 0010|11|10|10|1101|011|010|10|...
+y = 1011|00|01|01|0010|100|101|01|...
+z = 0010|00|10|01|1101|100|010|01|...
+```
+
 ###5. Mutation
 
 Randomness is added to the genetics of the population by making small changes to an organism's chromosome. A mutation rate
