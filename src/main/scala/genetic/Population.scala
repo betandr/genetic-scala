@@ -3,7 +3,7 @@ package genetic
 import util.Random
 
 class Population(val populationSize: Integer) {
-  val numChromosome: Integer = 8
+  val chromosomeSize: Integer = 64
   var pop: Array[Organism] = _
 
   val mutationRate = 0.015
@@ -19,9 +19,13 @@ class Population(val populationSize: Integer) {
   def populate = {
     pop = new Array[Organism](populationSize + 1)
 
-    for( i <- 0 to populationSize ) {
-      val bytes = new Array[Byte](numChromosome)
-      Random.nextBytes(bytes)
+    for( i <- 0 to populationSize - 1) {
+
+      val bytes = new Array[Byte](chromosomeSize)
+
+      for( j <- 0 to chromosomeSize - 1) {
+        bytes(j) = Math.round(Math.random).toByte
+      }
 
       val organism = new Organism(bytes)
       pop(i) = organism
@@ -47,7 +51,7 @@ class Population(val populationSize: Integer) {
   def fittest(evaluator: Evaluator): Organism = {
     var o: Organism = pop(0)
 
-    for (i <- 1 to populationSize) {
+    for (i <- 0 to populationSize - 1) {
       if (evaluator.fitness(pop(i)) > evaluator.fitness(o)) {
         o = pop(i)
       }
@@ -78,7 +82,7 @@ class Population(val populationSize: Integer) {
     for(index <- offset to pop.size) {
       val parent1: Organism = tournamentSelection(evaluator)
       val parent2: Organism = tournamentSelection(evaluator)
-      val child: Organism = uniformCrossover(parent1, parent2)
+      val child: Organism = crossover(parent1, parent2)
 
       nextGeneration.addOrganism(index, mutate(child))
     }
@@ -101,7 +105,7 @@ class Population(val populationSize: Integer) {
     new Organism(c)
   }
 
-  def uniformCrossover(parent1: Organism, parent2: Organism): Organism = {
+  def crossover(parent1: Organism, parent2: Organism): Organism = {
     val otherParentGenes = parent2.genes
     val chromosomes = new Array[Byte](otherParentGenes.length)
 
@@ -117,18 +121,6 @@ class Population(val populationSize: Integer) {
     }
 
     new Organism(chromosomes)
-  }
-
-  /**
-   * Use one-point crossover to create a child organism
-   */
-  def onePointCrossover(parent1: Organism, parent2: Organism): Organism = {
-    val cutPoint = Random.nextInt(parent1.genes.length)
-
-    new Organism(
-      parent1.genes.slice(0, cutPoint) ++
-        parent2.genes.slice(cutPoint, parent1.genes.length)
-    )
   }
 
   /**

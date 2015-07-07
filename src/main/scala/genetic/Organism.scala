@@ -9,8 +9,7 @@ class Organism(val chromosome: Array[Byte]) {
     val sb: StringBuilder = new StringBuilder
 
     for (gene <- chromosome) {
-      val s: String = String.format("%8s", Integer.toBinaryString(gene & 0xFF)).replace(' ', '0');
-      sb.append(s)
+      if (gene == 1) { sb.append("1") } else { sb.append("0") }
     }
 
     sb.toString

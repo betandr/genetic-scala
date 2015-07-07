@@ -1,6 +1,15 @@
 package genetic
 
-class Evaluator(solution: Array[Byte]) {
+class Evaluator {
+  var solutionBytes: Array[Byte] = _
+
+  def load(solution: String) = {
+    solutionBytes = new Array[Byte](solution.length)
+
+    for (i <- 0 to solution.length - 1) {
+      solutionBytes(i) = solution.charAt(i).asDigit.toByte
+    }
+  }
 
   /**
   * Calculate an organism's fitness by comparing it to the optimal solution
@@ -10,9 +19,7 @@ class Evaluator(solution: Array[Byte]) {
     var index: Integer = 0
 
     for (gene <- organism.genes) {
-      if (solution(index) == gene) {
-        score += 1
-      }
+      if (solutionBytes(index) == gene) { score += 1 }
       index += 1
     }
 
