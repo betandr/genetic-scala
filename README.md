@@ -50,12 +50,6 @@ To create a new organism, two parents are selected using tournament selection th
 [uniform crossover](https://en.wikipedia.org/wiki/Crossover_(genetic_algorithm)#Uniform_Crossover_and_Half_Uniform_Crossover)
 which uses a mixing ratio of 0.5, thereby taking an roughly equal number of genes from each organism. 
 
-```
-|**0**|**0**|**1**|**1**|0|0|1|0|1|0|1|**1**|**1**|0|**1**|0|1|0|**1**|**0**|**1**|**1**|**0**|**1**|**0**|0|1|0|1|**0**|1|1|0|**1**|**0**|1|0|1|**0**|**1**|**1**|0|1|0|**1**|**0**|1|0|1|1|0|**1**|0|1|**1**|0|1|0|0|**1**|**0**|**1**|0|
-|1|1|1|0|0|0|1|0|1|1|0|1|0|1|1|0|1|0|0|1|0|1|1|0|1|0|1|0|1|0|1|0|1|1|1|0|1|0|1|0|0|1|1|1|0|0|0|1|1|0|1|0|1|0|1|1|1|0|0|1|0|1|0|
-```
-
-
 ###5. Mutation
 
 Randomness is added to the genetics of the population by making small changes to an organism's chromosome. A mutation rate
