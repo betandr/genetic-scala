@@ -80,8 +80,8 @@ class Population(val populationSize: Integer) {
     }
 
     for(index <- offset to pop.size) {
-      val parent1: Organism = tournamentSelection(evaluator)
-      val parent2: Organism = tournamentSelection(evaluator)
+      val parent1: Organism = select(evaluator)
+      val parent2: Organism = select(evaluator)
       val child: Organism = crossover(parent1, parent2)
 
       nextGeneration.addOrganism(index, mutate(child))
@@ -128,9 +128,9 @@ class Population(val populationSize: Integer) {
   }
 
   /**
-   * Select an organism from the population based on 'tournament' selection.
+   * Select an organism from the population using tochastic universal sampling, 'tournament', selection.
    */
-  def tournamentSelection(evaluator: Evaluator): Organism = {
+  def select(evaluator: Evaluator): Organism = {
     val numberOfRounds = 10
 
     val tournament = new Population(numberOfRounds)
