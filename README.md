@@ -1,4 +1,4 @@
-# genetic-scala
+# Genetic Scala
 
 Basic genetic algorithm implementation in Scala
 
@@ -49,8 +49,6 @@ generation.
 To create a new organism, two parents are selected using tournament selection then a child is created using 
 [uniform crossover](https://en.wikipedia.org/wiki/Crossover_(genetic_algorithm)#Uniform_Crossover_and_Half_Uniform_Crossover)
 which uses a mixing ratio of 0.5, thereby taking an roughly equal number of genes from each organism. 
-
-![Uniform Crossover](https://en.wikipedia.org/wiki/Crossover_(genetic_algorithm)#/media/File:UniformCrossover.png)
 
 ###5. Mutation
 
