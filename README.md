@@ -2,7 +2,9 @@
 
 ##Overview 
 
-Basic genetic algorithm implementation in Scala. The solution to achieve is a 64 bit number which is entered as the candidate solution. The fitness of each organism is it's closeness to this 64-bit number and the process completes when the solution is found in an organism. The initial generation is stochastically generated and then improved toward the solution each generation by creating children from the fittest individuals of a generation and mutating individuals to allow their genome to evolve.
+Basic genetic algorithm implementation in Scala. The solution to achieve is a 64 bit number which is entered as the candidate solution. The fitness of each organism is it's closeness to this 64-bit number and the process completes when an organism's chromosome matches this solution. 
+
+The initial generation is generated stochastically and then improves toward the solution each generation by creating children from the fittest individuals (the closest match to the solution) of a generation and mutating individuals to allow their genome to evolve.
 
 ##Running
 
