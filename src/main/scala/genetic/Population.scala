@@ -128,7 +128,7 @@ class Population(val populationSize: Integer) {
   }
 
   /**
-   * Select an organism from the population using tochastic universal sampling, 'tournament', selection.
+   * Select an organism from the population using stochastic universal sampling
    */
   def select(evaluator: Evaluator): Organism = {
     val numberOfRounds = 10
