@@ -1,6 +1,29 @@
 package genetic
 
-object Runner extends App {
+trait Evolver {
+
+  def run(candidate: String, evaluator: Evaluator, population: Population): Organism = {
+
+    def run(pop: Population, generation: Int): Organism = {
+      val fittest = evaluator.fittest(pop)
+      val fitness = evaluator.fitness(fittest)
+
+      println(f"generation: $generation%02d chromosome: $fittest%s fitness: $fitness%2.2f")
+
+      if (fitness >= 1.0)
+        fittest
+      else
+        run(
+          pop.evolve(true, evaluator),
+          generation + 1
+        )
+    }
+
+    run(population, 1)
+  }
+}
+
+object Runner extends App with Evolver {
   val evaluator = new Evaluator
   val candidate = "0101010101010101010101010101010101010101010101010101010101010101"
   evaluator.load(candidate)
@@ -8,26 +31,8 @@ object Runner extends App {
   var population = new Population(50)
   population.populate
 
-  try {
-    var generation = 1
-    var fittest = evaluator.fittest(population)
-    var fitness = evaluator.fitness(fittest)
+  val solution: Organism = run(candidate, evaluator, population)
 
-    while (evaluator.fitness(fittest) < 1.0) {
-      fitness = evaluator.fitness(fittest)
-      println(f"generation: $generation%02d chromosome: $fittest%s fitness: $fitness%2.2f")
-
-      population = population.evolve(true, evaluator)
-      generation += 1
-
-      fittest = evaluator.fittest(population)
-    }
-
-    println(f"generation: $generation%02d chromosome: $fittest%s fitness: $fitness%2.2f")
-    println("\ncandidate:  " + candidate)
-    println("solution:   " + evaluator.fittest(population))
-
-  } catch {
-    case e: Exception => println(e.getMessage)
-  }
+  println("\ncandidate:  " + candidate)
+  println("solution:   " + solution)
 }
