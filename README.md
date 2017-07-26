@@ -1,20 +1,20 @@
 # Genetic Scala
 
-##Overview 
+## Overview 
 
 Basic genetic algorithm implementation in Scala. The solution to achieve is a 64 bit number which is entered as the candidate solution. The fitness of each organism is it's closeness to this 64-bit number and the process completes when an organism's chromosome matches this solution. 
 
 The initial generation is generated stochastically and then improves toward the solution each generation by creating children from the fittest individuals (the closest match to the solution) of a generation and mutating individuals to allow their genome to evolve.
 
-##Running
+## Running
 
 ```
 sbt run
 ```
 
-##Process:
+## Process:
 
-###1. Initialisation
+### 1. Initialisation
 
 Creates a random population of 50 organisms each with a 64-bit chromosome, such as:
 
@@ -22,7 +22,7 @@ Creates a random population of 50 organisms each with a 64-bit chromosome, such 
 001100101011101010101101001010110101010110101010110101101001010
 ```
 
-###2. Evaluation
+### 2. Evaluation
  
 Fitness is calculated for each organism in the population by comparing each bit of the candidate solution with each 
 bit in the organism's chromosome. This gives a score which is then re-oriented to be a float between 0.0 and 1.0, using:
@@ -33,7 +33,7 @@ bit in the organism's chromosome. This gives a score which is then re-oriented t
 
 ...where m is the maximum score and s is the organism's score.
 
-###3. Selection
+### 3. Selection
 
 Organisms are selected based on 
 [stochastic universal sampling](https://en.wikipedia.org/wiki/Stochastic_universal_sampling) which can avoid issues 
@@ -48,7 +48,7 @@ By evolving the population in 'elitist' mode, the strongest organism is kept fro
 and added to the new generation. This ensures the next generation is at least as fit as the fittest in the previous 
 generation. 
 
-###4. Crossover
+### 4. Crossover
 
 To create a new organism, two parents are selected using tournament selection then a child is created using 
 [uniform crossover](https://en.wikipedia.org/wiki/Crossover_(genetic_algorithm)#Uniform_Crossover_and_Half_Uniform_Crossover)
@@ -62,23 +62,23 @@ y = 1011|00|01|01|0010|100|101|01|...
 z = 0010|00|10|01|1101|100|010|01|...
 ```
 
-###5. Mutation
+### 5. Mutation
 
 Randomness is added to the genetics of the population by making small changes to an organism's chromosome. A mutation rate
 of 0.015 is used to change a low enough proportion of the genes to not adversely affect already fit organisms but high 
 enough to introduce some healthy change in the population's genome to move closer to a solution. 
 
-###6. Repeat
+### 6. Repeat
 
 The process is repeated by evolving the population and checking the fittest in that 
 [next generation](https://en.wikipedia.org/wiki/Star_Trek:_The_Next_Generation).
 
-###7. Termination
+### 7. Termination
 
 The process is repeated until we find an organism with a fitness of 1.0 (as we have an understandable solution) so our 
 fitness function can find a definite score rather than just a best fit.
 
-##Results
+## Results
 
 Generally a result is found within 10 - 20 generations. Output shows the generation, the chromosome of the fittest 
 organism in that generation and the fitness. Finally the candidate solution is displayed along with the solution found
